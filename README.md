@@ -13,7 +13,7 @@ A web interface that allows you to control 6 servo motors using sliders, record 
 
 - [index.html](index.html) HTML + CSS + JavaScript interface.
 - [save_pose.php](./save_pose.php) PHP code for storing data in the database.
-- [poses.php](./poses.php) SQL file containing the table structure.
+- [poses.sql](./poses.sql) SQL file containing the table structure.
 
 ## Setup Instructions
 
