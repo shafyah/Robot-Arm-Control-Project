@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Robot Arm Control Panel</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background: #f4f7fc;
+      color: #333;
+      padding: 30px;
+      max-width: 800px;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    .motor-control {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      background: #fff;
+      padding: 12px 15px;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgb(0 0 0 / 0.1);
+      transition: box-shadow 0.3s ease;
+    }
+    .motor-control:hover {
+      box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+    }
+
+    .motor-control label {
+      flex: 0 0 90px;
+      font-weight: 600;
+      color: #34495e;
+      user-select: none;
+    }
+
+    .motor-control input[type="range"] {
+      flex: 1;
+      -webkit-appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: 5px;
+      background: #d1dbe5;
+      outline: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .motor-control input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #3498db;
+      cursor: pointer;
+      border-radius: 50%;
+      border: none;
+      transition: background 0.3s ease;
+    }
+    .motor-control input[type="range"]:hover::-webkit-slider-thumb {
+      background: #2980b9;
+    }
+    .motor-control input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: #3498db;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .motor-control input[type="range"]:hover::-moz-range-thumb {
+      background: #2980b9;
+    }
+
+    .motor-control span {
+      flex: 0 0 35px;
+      text-align: center;
+      font-weight: 700;
+      color: #2c3e50;
+      user-select: none;
+      margin-left: 15px;
+      font-size: 1.1em;
+      min-width: 35px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 1px 0;
+    }
+    .buttons button {
+      background-color: #3498db;
+      border: none;
+      color: white;
+      padding: 12px 22px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 4px 8px rgb(52 152 219 / 0.3);
+      transition: background-color 0.3s ease;
+    }
+    .buttons button:hover {
+      background-color: #2980b9;
+    }
+
+    #message {
+      text-align: center;
+      margin-bottom: 10px;
+      font-weight: 700;
+      font-size: 1.1em;
+      min-height: 22px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 10px;
+      margin-top: 20px;
+    }
+    table thead tr {
+      background: #2980b9;
+      color: #fff;
+      font-weight: 600;
+      text-transform: uppercase;
+      border-radius: 8px;
+    }
+    table thead th {
+      padding: 12px 10px;
+    }
+    table tbody tr {
+      background: #fff;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.05);
+      border-radius: 8px;
+      transition: background-color 0.2s ease;
+    }
+    table tbody tr:hover {
+      background-color: #ecf3fb;
+    }
+    table tbody td {
+      padding: 14px 10px;
+      text-align: center;
+      color: #34495e;
+      font-weight: 500;
+      user-select: none;
+    }
+    table tbody td button {
+      background-color: #e74c3c;
+      border: none;
+      color: white;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 3px 6px rgb(231 76 60 / 0.3);
+      transition: background-color 0.3s ease;
+    }
+    table tbody td button:hover {
+      background-color: #c0392b;
+    }
+    table tbody td button:first-child {
+      background-color: #27ae60;
+      box-shadow: 0 3px 6px rgb(39 174 96 / 0.3);
+      margin-right: 8px;
+    }
+    table tbody td button:first-child:hover {
+      background-color: #1e8449;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h2>Robot Arm Control Panel</h2>
+
+  <div class="motor-control">
+    <label for="motor1">Motor 1:</label>
+    <input type="range" id="motor1" name="motor1" min="0" max="180" value="90" oninput="updateValue(this)">
+    <span id="val_motor1">90</span>
+  </div>
+  <div class="motor-control">
+    <label for="motor2">Motor 2:</label>
+    <input type="range" id="motor2" name="motor2" min="0" max="180" value="90" oninput="updateValue(this)">
+    <span id="val_motor2">90</span>
+  </div>
+  <div class="motor-control">
+    <label for="motor3">Motor 3:</label>
+    <input type="range" id="motor3" name="motor3" min="0" max="180" value="90" oninput="updateValue(this)">
+    <span id="val_motor3">90</span>
+  </div>
+  <div class="motor-control">
+    <label for="motor4">Motor 4:</label>
+    <input type="range" id="motor4" name="motor4" min="0" max="180" value="90" oninput="updateValue(this)">
+    <span id="val_motor4">90</span>
+  </div>
+  <div class="motor-control">
+    <label for="motor5">Motor 5:</label>
+    <input type="range" id="motor5" name="motor5" min="0" max="180" value="90" oninput="updateValue(this)">
+    <span id="val_motor5">90</span>
+  </div>
+  <div class="motor-control">
+    <label for="motor6">Motor 6:</label>
+    <input type="range" id="motor6" name="motor6" min="0" max="180" value="90" oninput="updateValue(this)">
+    <span id="val_motor6">90</span>
+  </div>
+
+  <div class="buttons">
+    <button type="button" onclick="resetSliders()">Reset</button>
+    <button type="button" onclick="savePose()">Save Pose</button>
+    <button type="button" onclick="run()">Run</button>
+  </div>
+
+  <div id="message"></div>
+
+  <table id="poseTable">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Motor 1</th>
+        <th>Motor 2</th>
+        <th>Motor 3</th>
+        <th>Motor 4</th>
+        <th>Motor 5</th>
+        <th>Motor 6</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Rows will be added here -->
+    </tbody>
+  </table>
+
+<script>
+  function updateValue(slider) {
+    const spanId = "val_" + slider.id;
+    document.getElementById(spanId).textContent = slider.value;
+  }
+
+  function resetSliders() {
+    for (let i = 1; i <= 6; i++) {
+      const slider = document.getElementById(`motor${i}`);
+      slider.value = 90;
+      updateValue(slider);
+    }
+    clearMessage();
+  }
+
+  function getSliderValues() {
+    const values = [];
+    for (let i = 1; i <= 6; i++) {
+      values.push(document.getElementById(`motor${i}`).value);
+    }
+    return values;
+  }
+
+  let poseCount = 0;
+
+  function savePose() {
+    const values = getSliderValues();
+
+    const formData = new FormData();
+    for(let i=1; i<=6; i++) {
+      formData.append(`motor${i}`, values[i-1]);
+    }
+
+    fetch("save_pose.php", {
+      method: "POST",
+      body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+      if (data.trim() === "New record created successfully") {
+        poseCount++;
+        const tbody = document.querySelector("#poseTable tbody");
+        const row = document.createElement("tr");
+
+        row.innerHTML = `<td>${poseCount}</td>
+          <td>${values[0]}</td>
+          <td>${values[1]}</td>
+          <td>${values[2]}</td>
+          <td>${values[3]}</td>
+          <td>${values[4]}</td>
+          <td>${values[5]}</td>
+          <td>
+            <button onclick="loadPose(this)">Load</button>
+            <button onclick="removePose(this)">Remove</button>
+          </td>`;
+
+        tbody.appendChild(row);
+        showMessage("Pose saved successfully.");
+      } else {
+        showMessage("Error saving pose: " + data, true);
+      }
+    })
+    .catch(error => {
+      showMessage("Request failed: " + error, true);
+    });
+  }
+
+  function loadPose(button) {
+    const row = button.closest("tr");
+    const values = Array.from(row.children).slice(1, 7).map(td => td.textContent);
+
+    for (let i = 1; i <= 6; i++) {
+      document.getElementById(`motor${i}`).value = values[i - 1];
+      updateValue(document.getElementById(`motor${i}`));
+    }
+    clearMessage();
+  }
+
+  function removePose(button) {
+    const row = button.closest("tr");
+    row.remove();
+    clearMessage();
+  }
+
+  function run() {
+    alert("Running the pose...");
+  }
+
+  function showMessage(msg, isError = false) {
+    const msgDiv = document.getElementById("message");
+    msgDiv.textContent = msg;
+    msgDiv.style.color = isError ? "#e74c3c" : "#27ae60";
+  }
+
+  function clearMessage() {
+    const msgDiv = document.getElementById("message");
+    msgDiv.textContent = "";
+  }
+</script>
+
+</body>
+</html>
